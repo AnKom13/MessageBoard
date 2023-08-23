@@ -1,0 +1,39 @@
+{#{% extends 'flatpages/default.html' %}#}
+{#{% load filters %}#}
+
+{#{% load tags %}#}
+{#% extends "base_generic.html" %#}
+
+
+{% block title %}
+Комменты
+{% endblock title %}
+
+{% block content %}
+
+<hr>
+{% if comment_list %}
+<h3> Количество объявлений: {{ comment_list|length }}</h3>
+<table>
+    <tr>
+        <td>Содержание</td>
+        <td>Автор</td>
+        <td>Дата создания</td>
+        <td>статус</td>
+    </tr>
+    {% for p in comment_list %}
+    <tr>
+        <!-- Накладываю фильтр -->
+        <td>
+            {{ p.content }}
+        </td>
+        <td>{{ p.author }}</td>
+        <td>{{ p.time_create|date:'d.m.Y' }}</td>
+        <td>{{ p.status }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<h2>Комментов нет!</h2>
+{% endif %}
+{% endblock content %}

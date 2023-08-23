@@ -1,0 +1,51 @@
+{% block title %}
+Объявление Подробно
+{% endblock title %}
+
+{% block content %}
+
+
+<hr>
+<p><strong>Категория</strong> {{ announcement.get_category_display }}</p>
+<p><strong>Автор</strong> {{ announcement.author }}</p>
+<p><strong>Заголовок</strong> {{ announcement.title }}</p>
+<p><strong>Содержание</strong> {{ announcement.content }}</p>
+<p><strong>Дата создания</strong> {{ announcement.time_create|date:'d.m.Y' }}</p>
+<br>
+
+<button><a href="{% url 'ann_edit' announcement.id %}">Редактировать</a></button>
+<button><a href="{% url 'ann_delete' announcement.id %}">Удалить</a></button>
+<hr>
+<form action="" method="get">
+    {{ filterset.form.as_p }}
+    <input type="submit" value="Найти"/>
+</form>
+
+<hr>
+
+<h2>Предложения</h2>
+
+
+<br>
+
+{% for p in comments %}
+<li>
+    <strong>Содержание</strong> {{ p.content }}
+    <p>
+        <strong>Автор</strong> {{ p.author }}
+        <strong>Дата создания</strong> {{ p.time_create|date:'d.m.Y' }}
+        <strong>Статус</strong> {{ p.get_status_display }}
+
+        {% if p.status == 'w' %}
+            <button><a href="{% url 'accept' p.id %}">Принять</a></button>
+            <button><a href="{% url 'reject' p.id %}">Отказать</a></button>
+        {% endif %}
+    </p>
+
+</li>
+{% empty %}
+<h5> предложений нет.</h5>
+{% endfor %}
+<button><a href="{% url 'ann_list' %}">Назад</a></button>
+
+{% endblock content %}
