@@ -1,18 +1,35 @@
 from django import forms
+from requests import request
+
 from .models import Announcement, Comment
 from django.core.exceptions import ValidationError
 
 
 class AnnouncementForm(forms.ModelForm):
-    # def __init__(self, *args, **kwargs):
-    #     super(Announcement, self).__init__(*args, **kwargs)
-    #     self.fields['property'].initial = 'N'
+#    def __init__(self, *args, **kwargs):
+#        super(Announcement, self).__init__(*args, **kwargs)
+#        self.fields['author'].initial = request.user
 
     class Meta:
         model = Announcement
-        # fields = '__all__' #все поля кроме id
+#        fields = '__all__' #все поля кроме id
         # лучше все перечислять, чтобы не вывести поля которые не нужны
         fields = ['title', 'category', 'content', ]
+
+class AnnouncementForm1(forms.ModelForm):
+#    def __init__(self, *args, **kwargs):
+#        super(Announcement, self).__init__(*args, **kwargs)
+#        self.fields['author'].initial = request.user
+
+    class Meta:
+        model = Announcement
+#        fields = '__all__' #все поля кроме id
+        # лучше все перечислять, чтобы не вывести поля которые не нужны
+        fields = ['title', 'category', 'content', ]
+
+
+
+
 
 # def clean_property(self):
 #     pr = self.cleaned_data.get("property")
