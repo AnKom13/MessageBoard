@@ -9,26 +9,35 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import environ
 import os
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Start Django-environ
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+# reading .env file
+env.read_env(os.path.join(BASE_DIR, '.env'))
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-i*8e@)vx2v*cc!+snfsw7z-*$^6@qbu7yerdf5_cnxejbp2rpn'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -36,19 +45,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-#    'board',
+    #    'board',
     'board.apps.BoardConfig',
     'django.contrib.sites',
     #    'django.contrib.flatpages',
     'django_filters',
-
-
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-
-
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -62,23 +67,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'MessageBoard.urls'
-
-# TEMPLATES = [
-#     {
-#         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-#         #        'DIRS': [],
-#         'DIRS': [os.path.join(BASE_DIR, 'templates')],
-#         'APP_DIRS': True,
-#         'OPTIONS': {
-#             'context_processors': [
-#                 'django.template.context_processors.debug',
-#                 'django.template.context_processors.request',
-#                 'django.contrib.auth.context_processors.auth',
-#                 'django.contrib.messages.context_processors.messages',
-#             ],
-#         },
-#     },
-# ]
 
 TEMPLATES = [
     {
@@ -146,9 +134,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-
 SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
@@ -164,12 +149,12 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTIFICATION_METHOD = 'email'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.yandex.ru'  # адрес сервера Яндекс-почты для всех один и тот же
-EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
-EMAIL_HOST_USER = 'ankom888'  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
-EMAIL_HOST_PASSWORD = 'pixlyxzaswkxqqsl'  # пароль от почты (Это не пароль электронной почты, а код авторизации)
-EMAIL_USE_SSL = True  # Яндекс использует ssl, подробнее о том, что это, почитайте в дополнительных источниках, но включать его здесь обязательно
-DEFAULT_FROM_EMAIL = 'ankom888@yandex.ru'
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = env('EMAIL_USE_SSL')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/board/'

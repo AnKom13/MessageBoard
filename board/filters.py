@@ -19,3 +19,4 @@ class CommentFilter(FilterSet):
             'status': ['exact'],
             'author': ['exact'],
         }
+

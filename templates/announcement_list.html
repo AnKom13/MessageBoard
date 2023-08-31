@@ -1,8 +1,5 @@
-{#{% extends 'flatpages/default.html' %}#}
-{#{% load filters %}#}
 {% extends "base.html" %}
 {% load tags %}
-{#% extends "base_generic.html" %#}
 {% block header %}
 Объявления Поиск
 {% endblock header %}
@@ -67,7 +64,6 @@
 {% endif %}
 {% endif %}
 {% endblock content %}
-
 
 {% block user %}
 {{request.user}}

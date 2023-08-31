@@ -10,12 +10,11 @@ def new_comment(sender, instance, created, **kwargs):
     if created:
         subject = f'Пришел новый отклик на сообщение "{instance.announcement.title}" от {instance.announcement.author.username}'
         message = f'{instance.content}'
-        recipient_list = {instance.announcement.author.username},
+        recipient_list = {instance.announcement.author.email}
     else:
         subject = f'Изменен статус отклика'
         message = f'Изменен статус отклика "{instance.content}" на "{instance.get_status_display()}"'
-        recipient_list = {instance.author.username}
-    #    print('почта ушла')
+        recipient_list = {instance.author.email}
 
     send_mail(
         subject=subject,
@@ -24,4 +23,4 @@ def new_comment(sender, instance, created, **kwargs):
         recipient_list=recipient_list,
     )
     #    print(instance.announcement.author.username)
-    #print(f'{instance.status} {instance.get_status_display()}')
+    # print(f'{instance.status} {instance.get_status_display()}"->" {instance.author.email}')

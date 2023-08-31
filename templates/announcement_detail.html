@@ -1,15 +1,12 @@
-{% block title %}
-Объявление Подробно
-{% endblock title %}
+{% extends "base.html" %}
+{% block header %}Детальная информация об объявлении{% endblock header %}
 
 {% block content %}
-
-
 <hr>
 <p><strong>Категория</strong> {{ announcement.get_category_display }}</p>
 <p><strong>Автор</strong> {{ announcement.author }}</p>
 <p><strong>Заголовок</strong> {{ announcement.title }}</p>
-<p><strong>Содержание</strong> {{ announcement.content }}</p>
+<p><strong>Содержание</strong> {{ announcement.content|safe }}</p>
 <p><strong>Дата создания</strong> {{ announcement.time_create|date:'d.m.Y' }}</p>
 <br>
 {% if announcement.author == request.user %}
@@ -20,11 +17,5 @@
     <button><a href="{% url 'comment_create' announcement.id %}">Создать отклик</a></button>
 {% endif %}
 <hr>
-
 <button><a href="{% url 'ann_list' %}">Назад</a></button>
-<hr>
-
-
-<p>{{request.user}} {{announcement.author}}</p>
-
 {% endblock content %}

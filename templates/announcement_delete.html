@@ -1,9 +1,10 @@
+{% extends "base.html" %}
+{% block header %}Удаление объявления{% endblock header %}
 {% block content %}
-<h1>Удаление объявления</h1>
 <hr>
 <form action="" method="post">
     {% csrf_token %}
     <p>Удаляем "{{ object.title }}"?</p>
-    <input type="submit" value="Delete" />
+    <input type="submit" value="Delete"/>
 </form>
 {% endblock content %}
